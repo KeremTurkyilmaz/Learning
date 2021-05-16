@@ -1,6 +1,7 @@
 /*
  * Wheater App
- * Service: https://weatherstack.com
+ * Weather Service: https://weatherstack.com
+ * Geocode Service: https://www.mapbox.com
  * Docs. https://weatherstack.com/documentation
  * Last Update: 15/05/2021
  */
