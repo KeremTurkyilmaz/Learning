@@ -1,0 +1,31 @@
+<html lang='en'>
+  {{>head}}
+  <body>
+	  {{>header}}
+	  <div class="error-page">
+		  <p class="text">Maybe I didn't do my job well or it's you who searched for something that doesn't exist.</p>
+		  <p class="message"> 404 - Page Not Found</p>
+	  </div>
+  </body>
+</html>
+
+<style>
+	.error-page {
+		width: 100%;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		padding: 5px;
+	}
+	.error-page .text {
+		font-size: 1vw;
+		letter-spacing: -0.3px;
+		word-spacing: -1px;
+		transform: translateY(20px);
+	}
+	.error-page .message {
+		font-size: 10vw;
+		letter-spacing: -7.5px;
+		word-spacing: -18px;
+	}
+</style>
