@@ -18,15 +18,15 @@ const geocode = require('./utils/geocode');
 const targetCity = process.argv[2] ? process.argv[2] : 'Bellinzona';
 
 geocode(targetCity, (err, city) => {
-  if (err) {
-    return console.log(err);
-  } else {
-    console.log('Getting forecast for ' + city.location);
-    forecast(city.coordinates, (err, forecastData) => {
-      if (err) return console.log(err);
-      else {
-        console.log(forecastData);
-      }
-    });
-  }
+	if (err) {
+		return console.log(err);
+	} else {
+		console.log('Getting forecast for ' + city.location);
+		forecast(city.coordinates, (err, forecastData) => {
+			if (err) return console.log(err);
+			else {
+				console.log(forecastData);
+			}
+		});
+	}
 });
