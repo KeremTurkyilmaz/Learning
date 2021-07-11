@@ -1,13 +1,14 @@
 /*
- * MongoDB - Crud Operations
+ * Task App - Rest API with MongoDB
  * MongoDB Docs: http://mongodb.github.io/node-mongodb-native/3.4/api/index.html
  * MongoDB GUI (Robo 3T): https://robomongo.org/
  * Useful Docs:
  * 	- Comparison Query Operators -> https://docs.mongodb.com/manual/reference/operator/query/gt/
+ * 	- Update Operator -> https://docs.mongodb.com/manual/reference/operator/update/
  * Last Update: 19/05/2021
  */
 
-const { MongoClient, ObjectID } = require('mongodb');
+const { MongoClient } = require('mongodb');
 
 const PORT = 27017;
 const connectionUrl = `mongodb://127.0.0.1:${PORT}`;

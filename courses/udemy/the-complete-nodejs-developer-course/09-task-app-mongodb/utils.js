@@ -24,7 +24,6 @@ const connectionReferences = (res, collection) => {
 
 /**
  * Perform a "DELETE" request - Delete a document in a MongoDB Collection
- * https://docs.mongodb.com/manual/reference/operator/update/
  * @param {Object} target - Target to be update into the collection
  * @param {Object} collection - Collection Reference
  * @param {requestCallback} callback - The callback that handles the response.
