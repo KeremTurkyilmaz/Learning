@@ -1,0 +1,80 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="//unpkg.com/vue-svg-inline-plugin"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pathseg@1.2.0/pathseg.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/poly-decomp@0.2.1/build/decomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="./src/css/main.css" />
+    <title>01 Typography Matter.js</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="scene" ref="scene"></div>
+      <div class="svgs" v-show="false" ref="letters">
+        <img v-svg-inline src="./src/assets/helvetica.svg" id="h" />
+      </div>
+    </div>
+  </body>
+
+  <script type="module">
+    import compositeManipulation from './src/js/compositeManipulation.js';
+    const App = {
+      setup(props) {
+        const debug = true;
+        let composite = Vue.ref(null);
+        let scene = Vue.ref(null);
+        const letters = Vue.ref(null);
+        const svgs = Vue.ref([]);
+
+        Vue.onMounted(() => {
+          Vue.nextTick(() => {
+            letters.value.childNodes.forEach((svg) => {
+              svgs.value.push({ el: svg, letter: svg.getAttribute('id') });
+            });
+            initScene({ letters: svgs.value });
+          });
+        });
+
+        const initScene = (options = {}) => {
+          composite = new compositeManipulation({
+            element: scene.value,
+            letters: options.letters,
+            matterOptions: {
+              width: window.innerWidth,
+              height: window.innerHeight,
+              showPositions: debug,
+              showVertexNumbers: false,
+              showBounds: debug,
+              wireframes: debug,
+              showDebug: debug,
+              showStats: debug,
+              showPerformance: debug,
+            },
+          });
+        };
+
+        return {
+          letters,
+          scene,
+          svgs,
+        };
+      },
+      mounted() {
+        //   this.$nextTick(() => {
+        //     console.log(this.svgs.value);
+        //
+        //     console.log(this.svgs);
+        //   });
+        //   this.initScene();
+      },
+      destroyed() {
+        this.composite = null;
+      },
+    };
+    Vue.createApp(App).use(VueSvgInlinePlugin).mount('#app');
+  </script>
+</html>
