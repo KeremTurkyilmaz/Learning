@@ -1,0 +1,1 @@
+/* Netlify will automacally detect gatsby if a config file is present */
