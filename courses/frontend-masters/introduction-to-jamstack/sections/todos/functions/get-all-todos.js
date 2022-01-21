@@ -1,3 +1,5 @@
+const sendQuery = require('./utils/send-query');
+
 const GET_ALL_TODOS = `
   query {
     allTodos {
@@ -8,6 +10,20 @@ const GET_ALL_TODOS = `
       }
     }
   }
-`
+`;
 
+exports.handler = async () => {
+  const { data, errors } = await sendQuery(GET_ALL_TODOS);
 
+  if (errors) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify(errors),
+    };
+  }
+  console.log('Data', data.allTodos.data);
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ todos: data.allTodos.data }),
+  };
+};

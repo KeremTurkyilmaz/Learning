@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 1rem;
+}
+
+.heading {
+  color: #222;
+  text-align: center;
+}
+
+.loading {
+  margin-top: 1rem;
+}
+
+.todos {
+  border-top: 1px solid #ddd;
+  list-style: none;
+  margin: 2rem auto;
+  max-width: 500px;
+  padding: 0;
+}
+
+.todo {
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0.75rem;
+  width: 100%;
+}
+
+.loading {
+  text-align: center;
+}

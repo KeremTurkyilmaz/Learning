@@ -1,17 +1,17 @@
 require('dotenv').config();
 const axios = require('axios');
 
-module.exports = async(query, variables) => {
-  const result = await axios({
+module.exports = async (query, variables) => {
+  const results = await axios({
     url: 'https://graphql.eu.fauna.com/graphql',
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${process.env.FAUNA_SERVER_SECRET}`
+      Authorization: `Bearer ${process.env.FAUNA_SERVER_SECRET}`,
     },
     data: {
       query,
-      variables
-    }
+      variables,
+    },
   });
-  return results.data
-}
+  return results.data;
+};

@@ -1,0 +1,37 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem auto;
+  max-width: 500px;
+  padding: 0;
+}
+
+.label {
+  color: #666;
+  text-indent: 0.25rem;
+}
+
+.input {
+  margin: 0.95rem 0;
+  line-height: 1.3rem;
+  border: 1px solid lightgray;
+  padding: 0.75rem;
+  width: 200px;
+}
+
+.input,
+.button {
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+}
+
+.button {
+  border: 1px solid lightgray;
+  background-color: rgb(11, 136, 213);
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem;
+  width: 200px;
+}
