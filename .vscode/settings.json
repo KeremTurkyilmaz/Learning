@@ -2,6 +2,8 @@
   "editor.formatOnSave": true,
   "vetur.validation.template": false,
   "vetur.validation.interpolation": false,
+  "editor.tabSize": 2,
+  "editor.useTabStops": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }
