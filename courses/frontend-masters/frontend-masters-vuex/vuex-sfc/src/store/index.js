@@ -24,16 +24,16 @@ export default new Vuex.Store({
     isDispensing: false,
   },
   actions: {
-    fetchFromInventory(context) {
-      context.commit('isRestocking', true);
+    fetchFromInventory({ commit }) {
+      commit('isRestocking', true);
       pingInventory('chips')
         .then((inventory) => {
-          context.commit('stockItems', inventory.stock);
+          commit('stockItems', inventory.stock);
         })
-        .finally(() => context.commit('isRestocking', false));
+        .finally(() => commit('isRestocking', false));
     },
-    dispense(context) {
-      context.commit('dispense');
+    dispense({ commit }) {
+      commit('dispense');
     },
   },
   getters: {},
