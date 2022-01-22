@@ -15,9 +15,21 @@ const persistDataPlugin = store => {
       }
     }
   });
-  store.subscribeAction(action => {
-    console.log('action type', action.type);
-    console.log('action payload', action.payload);
+  store.subscribeAction({
+    before: (action, state) => {
+      if (action.type === 'serviceMachine') {
+        const timeLapsed = new Date().getTime() - state.lastServiced.getTime();
+        console.log(`${timeLapsed / 1000} seconds passed`);
+        console.log('Before');
+        console.log(state.lastServiced);
+      }
+    },
+    after: (action, state) => {
+      if (action.type === 'serviceMachine') {
+        console.log('After');
+        console.log(state.lastServiced);
+      }
+    }
   });
 };
 
