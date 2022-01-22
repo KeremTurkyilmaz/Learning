@@ -2,13 +2,13 @@ const persistTime = 24 * 60 * 60 * 1000; // 1 day
 
 const persistDataPlugin = store => {
   store.subscribe((mutation, state) => {
-    if (mutation.type === "updateServiceDate") {
+    if (mutation.type === 'updateServiceDate') {
       let record = {
         dateTime: state.lastServiced,
         persistFor: state.lastServiced.getTime() + persistTime
       };
       try {
-        window.localStorage.setItem("last_serviced", JSON.stringify(record));
+        window.localStorage.setItem('last_serviced', JSON.stringify(record));
       } catch (e) {
         console.log(e);
         throw e;
@@ -16,8 +16,8 @@ const persistDataPlugin = store => {
     }
   });
   store.subscribeAction(action => {
-    console.log(action.type);
-    console.log(action.payload);
+    console.log('action type', action.type);
+    console.log('action payload', action.payload);
   });
 };
 
