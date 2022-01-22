@@ -12,15 +12,19 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import machine from '../store/modules/machine';
+import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: "VendingMachineUserView",
+  name: 'VendingMachineUserView',
   computed: {
-    ...mapState("machine", ["timesServiced"])
+    ...mapState('machine', ['timesServiced'])
   },
   methods: {
-    ...mapActions("machine", ["serviceMachine"])
+    ...mapActions('machine', ['serviceMachine'])
+  },
+  created() {
+    this.$store.registerModule('machine', machine);
   }
 };
 </script>

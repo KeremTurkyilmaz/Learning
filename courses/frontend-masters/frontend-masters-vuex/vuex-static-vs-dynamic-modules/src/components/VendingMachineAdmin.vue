@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import OperatorView from "./OperatorView";
-import VendingMachineItem from "./VendingMachineItem";
+import OperatorView from './OperatorView';
+import VendingMachineItem from './VendingMachineItem';
 
 export default {
-  name: "VendingMachineAdmin",
+  name: 'VendingMachineAdmin',
   components: {
     OperatorView,
     VendingMachineItem
@@ -26,34 +26,40 @@ export default {
     return {
       machines: [
         {
-          name: "Leela",
-          lastServiced: "Feb 2019",
-          condition: "working"
+          id: 0,
+          name: 'Leela',
+          lastServiced: 'Feb 2019',
+          condition: 'working'
         },
         {
-          name: "Hermes",
-          lastServiced: "Feb 2019",
-          condition: "working"
+          id: 1,
+          name: 'Hermes',
+          lastServiced: 'Feb 2019',
+          condition: 'working'
         },
         {
-          name: "Bender",
-          lastServiced: "Feb 2019",
-          condition: "working"
+          id: 2,
+          name: 'Bender',
+          lastServiced: 'Feb 2019',
+          condition: 'working'
         },
         {
-          name: "Farnsworth",
-          lastServiced: "Feb 2019",
-          condition: "retired"
+          id: 3,
+          name: 'Farnsworth',
+          lastServiced: 'Feb 2019',
+          condition: 'retired'
         },
         {
-          name: "Fry",
-          lastServiced: "Feb 2019",
-          condition: "broken"
+          id: 4,
+          name: 'Fry',
+          lastServiced: 'Feb 2019',
+          condition: 'broken'
         },
         {
-          name: "Wash Bucket",
-          lastServiced: "Jan 2020",
-          condition: "working"
+          id: 5,
+          name: 'Wash Bucket',
+          lastServiced: 'Jan 2020',
+          condition: 'working'
         }
       ]
     };

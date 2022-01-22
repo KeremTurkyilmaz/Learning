@@ -4,9 +4,7 @@
     <div class="machine-card--info">
       <p>{{ machine.name }}</p>
       <span>{{ machine.lastServiced }}</span>
-      <span :style="{ fontStyle: 'italic' }"
-        >Serviced {{ timesServiced }} times</span
-      >
+      <span :style="{ fontStyle: 'italic' }">Serviced {{ timesServiced }} times</span>
     </div>
     <span class="machine-state">{{ machine.condition }}</span>
     <button class="service-btn" @click="serviceMachine">Service</button>
@@ -14,10 +12,10 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from 'vuex';
 
 export default {
-  name: "VendingMachineItem",
+  name: 'VendingMachineItem',
   props: {
     machine: Object
   },
@@ -32,7 +30,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions("machine", ["serviceMachine"])
+    ...mapActions('machine', ['serviceMachine'])
   }
 };
 </script>
@@ -49,7 +47,7 @@ export default {
   margin: 20px 10px;
   background: #fff;
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
