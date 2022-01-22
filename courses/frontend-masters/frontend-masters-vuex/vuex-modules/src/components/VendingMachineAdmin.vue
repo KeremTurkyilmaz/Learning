@@ -2,11 +2,7 @@
   <div id="wrapper">
     <section class="product-list">
       <ul>
-        <li
-          class="product-list--item"
-          v-for="snack in inventory"
-          :key="snack.productName"
-        >
+        <li class="product-list--item" v-for="snack in inventory" :key="snack.productName">
           <div class="product-information">
             <div class="product-avatar"></div>
             <span>{{ snack.productName }}</span>
@@ -56,28 +52,26 @@
 
 <script>
 export default {
-  name: "VendingMachineAdmin",
+  name: 'VendingMachineAdmin',
   computed: {
     machineName() {
-      return this.$store.state.machineName;
-    },
-    inventory() {
-      return this.$store.state.inventory;
+      return this.$store.state.machine.machineName;
     },
     serviceDateTime() {
-      return this.$store.getters.serviceDateTime;
+      return this.$store.getters['machine/serviceDateTime'];
     },
     machineMessages() {
-      const supplyMsg = this.$store.getters.isSupplyLow ? "Supply is low" : "";
-      const conditionMsg = this.$store.getters.isMachineWorking
-        ? ""
-        : "Machine is not working";
+      const supplyMsg = this.$store.getters['inventory/isSupplyLow'] ? 'Supply is low' : '';
+      const conditionMsg = this.$store.getters['machine/isMachineWorking'] ? '' : 'Machine is not working';
       return `${supplyMsg}, ${conditionMsg}`;
+    },
+    inventory() {
+      return this.$store.state.inventory.supply;
     }
   },
   methods: {
     serviceMachine() {
-      this.$store.dispatch("serviceMachine");
+      this.$store.dispatch('machine/serviceMachine');
     }
   }
 };
@@ -86,7 +80,7 @@ export default {
 <style lang="scss">
 body {
   background: #333;
-  font-family: "Gothic A1", sans-serif;
+  font-family: 'Gothic A1', sans-serif;
   display: flex;
   justify-content: center;
 }
