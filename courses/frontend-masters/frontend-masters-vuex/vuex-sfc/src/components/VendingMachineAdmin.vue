@@ -252,6 +252,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
   name: 'VendingMachineAdmin',
   data() {
@@ -260,26 +262,25 @@ export default {
     };
   },
   computed: {
-    supply() {
-      return this.$store.state.supply;
-    },
-    isRestocking() {
-      return this.$store.state.isRestocking;
-    },
+    ...mapState(['supply', 'isRestocking']),
     isInLoadingState() {
       return this.$store.state.isRestocking || this.isDispensing;
     },
   },
   methods: {
+    ...mapActions({
+      restockState: 'fetchFromInventory',
+      dispenseItem: 'dispense',
+    }),
     dispense() {
       this.isDispensing = true;
       setTimeout(() => {
-        this.$store.dispatch('dispense');
+        this.dispenseItem();
         this.isDispensing = false;
       }, 3000);
     },
     restock() {
-      this.$store.dispatch('fetchFromInventory');
+      this.restockState();
     },
   },
 };
