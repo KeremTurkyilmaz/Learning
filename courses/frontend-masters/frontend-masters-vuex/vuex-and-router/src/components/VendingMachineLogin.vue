@@ -22,10 +22,12 @@
 
 <script>
 export default {
-  name: "VendingMachineLogin",
+  name: 'VendingMachineLogin',
   methods: {
     handleLogin() {
-      // we'll dispatch the login and reroute here //
+      this.$store.dispatch('logIn').then(() => {
+        this.$router.push('/');
+      });
     }
   }
 };

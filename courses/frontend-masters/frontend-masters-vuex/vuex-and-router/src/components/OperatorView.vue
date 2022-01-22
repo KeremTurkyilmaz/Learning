@@ -10,15 +10,9 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48.45 48.36">
         <g id="Layer_2" data-name="Layer 2">
           <g id="Layer_1-2" data-name="Layer 1">
-            <polyline
-              class="cls-1"
-              points="45.95 27 45.95 45.86 2.5 45.86 2.5 2.5 21.93 2.5"
-            />
+            <polyline class="cls-1" points="45.95 27 45.95 45.86 2.5 45.86 2.5 2.5 21.93 2.5" />
             <line class="cls-2" x1="13.6" y1="34.73" x2="38.29" y2="10.41" />
-            <polygon
-              class="cls-3"
-              points="46.34 2.72 42.35 17.32 31.71 6.57 46.34 2.72"
-            />
+            <polygon class="cls-3" points="46.34 2.72 42.35 17.32 31.71 6.57 46.34 2.72" />
           </g>
         </g>
       </svg>
@@ -29,13 +23,15 @@
 
 <script>
 export default {
-  name: "OperatorView",
+  name: 'OperatorView',
   props: {
     primaryMachine: String
   },
   methods: {
     logout() {
-      console.log("logout");
+      this.$store.dispatch('logOut').then(() => {
+        this.$router.push('/login');
+      });
     }
   }
 };
