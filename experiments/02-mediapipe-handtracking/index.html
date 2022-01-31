@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="./src/css/main.css" />
+    <title>Media Pipe - Handtracking</title>
+  </head>
+  <body>
+    <video class="input_video"></video>
+    <canvas class="output_canvas"></canvas>
+
+    <!-- <div class="wrapper" id="wrapper">
+      <div class="block">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+        nesciunt tempora iusto, voluptate ad, architecto veritatis doloremque a
+        corrupti dicta quibusdam consequuntur hic voluptatem deserunt et dolores
+        molestiae eius sit.
+        <div class="small">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+          nesciunt tempora iusto, voluptate ad, architecto veritatis doloremque
+          a corrupti dicta quibusdam consequuntur hic voluptatem deserunt et
+          dolores molestiae eius sit. Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Repellat nesciunt tempora iusto, voluptate ad,
+          architecto veritatis doloremque a corrupti dicta quibusdam
+          consequuntur hic voluptatem deserunt et dolores molestiae eius sit.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+          nesciunt tempora iusto, voluptate ad, architecto veritatis doloremque
+          a corrupti dicta quibusdam consequuntur hic voluptatem deserunt et
+          dolores molestiae eius sit. Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Repellat nesciunt tempora iusto, voluptate ad,
+          architecto veritatis doloremque a corrupti dicta quibusdam
+          consequuntur hic voluptatem deserunt et dolores molestiae eius sit.
+        </div>
+      </div>
+      <div class="block">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+        nesciunt tempora iusto, voluptate ad, architecto veritatis doloremque a
+        corrupti dicta quibusdam consequuntur hic voluptatem deserunt et dolores
+        molestiae eius sit.
+        <div class="small">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+          nesciunt tempora iusto, voluptate ad, architecto veritatis doloremque
+          a corrupti dicta quibusdam consequuntur hic voluptatem deserunt et
+          dolores molestiae eius sit. Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Repellat nesciunt tempora iusto, voluptate ad,
+          architecto veritatis doloremque a corrupti dicta quibusdam
+          consequuntur hic voluptatem deserunt et dolores molestiae eius sit.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+          nesciunt tempora iusto, voluptate ad, architecto veritatis doloremque
+          a corrupti dicta quibusdam consequuntur hic voluptatem deserunt et
+          dolores molestiae eius sit. Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Repellat nesciunt tempora iusto, voluptate ad,
+          architecto veritatis doloremque a corrupti dicta quibusdam
+          consequuntur hic voluptatem deserunt et dolores molestiae eius sit.
+        </div>
+      </div>
+      <div class="block">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+        nesciunt tempora iusto, voluptate ad, architecto veritatis doloremque a
+        corrupti dicta quibusdam consequuntur hic voluptatem deserunt et dolores
+        molestiae eius sit.
+        <div class="small">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+          nesciunt tempora iusto, voluptate ad, architecto veritatis doloremque
+          a corrupti dicta quibusdam consequuntur hic voluptatem deserunt et
+          dolores molestiae eius sit. Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Repellat nesciunt tempora iusto, voluptate ad,
+          architecto veritatis doloremque a corrupti dicta quibusdam
+          consequuntur hic voluptatem deserunt et dolores molestiae eius sit.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+          nesciunt tempora iusto, voluptate ad, architecto veritatis doloremque
+          a corrupti dicta quibusdam consequuntur hic voluptatem deserunt et
+          dolores molestiae eius sit. Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Repellat nesciunt tempora iusto, voluptate ad,
+          architecto veritatis doloremque a corrupti dicta quibusdam
+          consequuntur hic voluptatem deserunt et dolores molestiae eius sit.
+        </div>
+      </div>
+    </div> -->
+  </body>
+
+  <script type="module">
+    const SCL = 0.3;
+    const CANVAS_WIDTH = Math.round(1280 * SCL);
+    const CANVAS_HEIGHT = Math.round(720 * SCL);
+
+    const options = {
+      lineWidth: 0.2,
+      color: '#000',
+    };
+
+    const videoElement = document.getElementsByClassName('input_video')[0];
+    const canvasElement = document.getElementsByClassName('output_canvas')[0];
+    const ctx = canvasElement.getContext('2d');
+
+    canvasElement.width = CANVAS_WIDTH;
+    canvasElement.height = CANVAS_HEIGHT;
+    ctx.width = CANVAS_WIDTH;
+    ctx.height = CANVAS_HEIGHT;
+
+    function drawResults(results) {
+      ctx.save();
+      ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+      ctx.drawImage(results.image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+      if (results.multiHandLandmarks) {
+        for (const landmarks of results.multiHandLandmarks) {
+          const avg = landmarks.reduce(
+            (a, b) => {
+              return {
+                x: a.x + b.x,
+                y: a.y + b.y,
+              };
+            },
+            { x: 0, y: 0 }
+          );
+          avg.x /= landmarks.length;
+          avg.y /= landmarks.length;
+
+          console.log(avg.x, avg.y);
+
+          ctx.beginPath();
+          ctx.arc(avg.x, avg.y, 50, 0, 2 * Math.PI);
+          ctx.stroke();
+
+          // drawConnectors(ctx, landmarks, HAND_CONNECTIONS, { ...options });
+          // drawLandmarks(ctx, landmarks, { ...options });
+        }
+      }
+      ctx.restore();
+    }
+
+    const hands = new Hands({
+      locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+      },
+      setOptions: () => ({
+        maxNumHands: 2,
+        minDetectionConfidence: 0.5,
+        minTrackingConfidence: 0.5,
+      }),
+    });
+
+    hands.onResults((r) => drawResults(r));
+    const camera = new Camera(videoElement, {
+      onFrame: async () => {
+        await hands.send({ image: videoElement });
+      },
+      width: 1280,
+      height: 720,
+    });
+    camera.start();
+  </script>
+</html>

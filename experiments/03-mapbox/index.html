@@ -1,0 +1,106 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+    <link rel="stylesheet" href="./src/css/main.css" type="text/css" />
+    <title>03 Mapbox</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="map-content" class="map-content"></div>
+    </div>
+  </body>
+
+  <script type="module">
+    const App = {
+      setup(props) {
+        const run = true;
+        const ctx = Vue.ref();
+        const canvas = Vue.ref();
+        const bounds = Vue.reactive({ w: 0, h: 0 });
+        const MAP_TOKEN =
+          'pk.eyJ1Ijoia2VyZW10IiwiYSI6ImNrMjdxODA4YTA5cTQzcXFmczR1OGdvc3oifQ.VKWRP5xBjb0b36xtpMnccQ';
+
+        let map = Vue.ref();
+
+        const init = () => {
+          mapboxgl.accessToken = MAP_TOKEN;
+
+          map = new mapboxgl.Map({
+            container: 'map-content',
+            style: 'mapbox://styles/keremt/ckxt7flmsa5g714kr57rxc0kx',
+            center: [-74.0066, 40.7135],
+            zoom: 15.5,
+            pitch: 45,
+            bearing: -17.6,
+            antialias: true,
+          });
+
+          map.on('load', () => {
+            // Insert the layer beneath any symbol layer.
+            const layers = map.getStyle().layers;
+            const labelLayerId = layers.find(
+              (layer) => layer.type === 'symbol' && layer.layout['text-field']
+            ).id;
+
+            // The 'building' layer in the Mapbox Streets
+            // vector tileset contains building height data
+            // from OpenStreetMap.
+            map.addLayer(
+              {
+                id: 'add-3d-buildings',
+                source: 'composite',
+                'source-layer': 'building',
+                filter: ['==', 'extrude', 'true'],
+                type: 'fill-extrusion',
+                minzoom: 15,
+                paint: {
+                  'fill-extrusion-color': '#aaa',
+
+                  // Use an 'interpolate' expression to
+                  // add a smooth transition effect to
+                  // the buildings as the user zooms in.
+                  'fill-extrusion-height': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    15,
+                    0,
+                    15.05,
+                    ['get', 'height'],
+                  ],
+                  'fill-extrusion-base': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    15,
+                    0,
+                    15.05,
+                    ['get', 'min_height'],
+                  ],
+                  'fill-extrusion-opacity': 0.6,
+                },
+              },
+              labelLayerId
+            );
+          });
+        };
+
+        Vue.onMounted(() => {
+          init();
+          // draw();
+        });
+
+        return { map };
+      },
+    };
+    Vue.createApp(App).mount('#app');
+  </script>
+</html>
