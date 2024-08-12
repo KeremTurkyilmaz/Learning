@@ -36,3 +36,4 @@ A list of all the courses I intend to take or have taken.
 - [x] Introduction to JAMstack | [Course](https://frontendmasters.com/courses/jamstack/)
 - [x] Vuex for Intermediate Vue.js Developers | [Course](https://frontendmasters.com/courses/vuex/)
 - [x] Introduction to Vue3 | [Course](https://frontendmasters.com/courses/vue-3/)
+- [x] Intro to Node.js v3 | [Course](https://frontendmasters.com/courses/node-js-v3/)
